@@ -19,22 +19,24 @@ int main()
     init_dialog(stdin, stdout);
     dialog_vars.item_help=false;
    
+    char dname[10]="xuy";
    
-   
-   
-    
+   char buf[MAX_LEN];
+    //   Name NameY NameX Text TextY TextX FLen ILen
      
-    char * rows[]={"1","we","2","fdd","3","sfd","4","dds"};
-    
-
-    dialog_form("test","test",0,0,0,2,rows) ;
-    dialog_vars.input_menu=true;
-    //dialog_menu("test","test",40,50,40,4,rows) ;
-
+    char * rows[]={"1","1","1","Disk Name","1","10","15","15",
+    "2","2","1","Disk Name","2","10","15","15",
+    "3","3","1",dname,"3","10","15","15"};
+    dialog_vars.input_result=buf;
+   dialog_vars.item_help=false;
+   dialog_form("test","Slots",30,30,30,3,rows) ;
+    //dialog_vars.input_menu=true;
+   // dialog_menu("test","test",40,50,40,4,rows) ;
+   
     //dialog_inputbox("test","fre",0,0,"eett",0);
     end_dialog();
   
-  
+ printf("%s",buf);
 
 /*
    strcpy(player_slots[1],"30s hits");
