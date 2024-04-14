@@ -27,7 +27,7 @@ int main()
     char * rows[]={"1","1","1","Disk Name","1","10","15","15",
     "2","2","1","Disk Name","2","10","15","15",
     "3","3","1",dname,"3","10","15","15"};
-    dialog_vars.input_result=buf;
+    dialog_vars.input_result=NULL;
    dialog_vars.item_help=false;
    dialog_form("test","Slots",30,30,30,3,rows) ;
     //dialog_vars.input_menu=true;
@@ -36,8 +36,8 @@ int main()
     //dialog_inputbox("test","fre",0,0,"eett",0);
     end_dialog();
   
- printf("%s",buf);
-
+ printf("%s",dialog_vars.input_result);
+ 
 /*
    strcpy(player_slots[1],"30s hits");
   
