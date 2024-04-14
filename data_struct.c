@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #endif
-#include "data_struct.h"
+
 char * diskname;
     
 FILE* musicfile;
