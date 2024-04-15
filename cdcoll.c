@@ -6,15 +6,17 @@
 #include <string.h>
 #endif
 #include "data_struct.h"
+#include "tui.c"
 #include<curses.h>
-#include <dialog.h>
+#define DIALOG_H
 
-char player_slots[200][50]={};
+char generated_rows[200][50];
+//char player_slots[200][50]={};   #include <dialog.h>
 
 int main()
 {
     
-
+/*
    int status;
     init_dialog(stdin, stdout);
     dialog_vars.item_help=false;
@@ -52,4 +54,6 @@ int main()
    
  */
 
+//build_edit_list();
+generate_rows(generated_rows);
 }
