@@ -4,53 +4,93 @@
 #ifndef STDLIB_H
 #define STDLB_H
 #include <stdlib.h>
-#endif
-#endif
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <menu.h>
+#include <curses.h>
+
+#endif
+#endif
 
 
-/*int build_edit_list()
+char * disklist[]={};
+
+
+void generate_list()
 {
- int status;
- init_dialog(stdin, stdout);
- dialog_vars.item_help=false;
-   
- char dname[10]="xuy";
-   
-char buf[MAX_LEN];
- //   Name NameY NameX Text TextY TextX FLen ILen  #include <dialog.h>
-  
- char * rows[]={"1","1","1","Disk Name","1","10","15","15",
- "2","2","1","Disk Name","2","10","15","15",
- "3","3","1",dname,"3","10","15","15"};
-dialog_vars.input_result=NULL;
-dialog_vars.item_help=false;
-//dialog_form("test","Slots",0,30,30,3,rows) ;
-dialog_form("test","Slots",0,30,30,10,generated_rows) ;
- end_dialog();
- printf("%s",dialog_vars.input_result);
- return 0;
-}
-*/
-void generate_rows(char  generated_rows[200][50]){
-    
-    
-    char  tem_string[50];
-    int i;
-    for( i=1;i<10;i++)
+    for (int i=0;i<=201;i++)
     {
-        sprintf(tem_string,"%d",i);
-        strcat(generated_rows[i],tem_string);
-        strcat(generated_rows[i],tem_string);
-        strcat(generated_rows[i],"1");
-        strcat(generated_rows[i],"DiskName");
-        strcat(generated_rows[i],tem_string);
-        strcat(generated_rows[i],"10");
-        strcat(generated_rows[i],"15");
-        strcat(generated_rows[i],"15");
+        disklist[i]="E morr";
     }
-
-   printf(generated_rows[3]);
 }
+
+
+
+void build_list()
+
+{
+    disklist[0]="test";
+    generate_list();
+    char mesg[]="Just a string";		/* message to be appeared on the screen */
+    int row,col;				/* to store the number of rows and *
+					 * the number of colums of the screen */
+    initscr();	
+    start_color();			/* Start color 			*/
+    init_pair(1, COLOR_WHITE, COLOR_BLUE);
+			/* start the curses mode */
+    attron(COLOR_PAIR(1));            
+    getmaxyx(stdscr,row,col);/* get the number of rows and columns */
+    char temp[3];
+ /* display 1st column*/
+ for (int i=0;i<40;i++)
+ {
+ sprintf(temp,"%d",i);
+ mvprintw(i,0,"%s",temp);   
+ mvprintw(i,3,"%s",disklist[i]);
+ }       
+
+/* display 2nd column*/
+for (int i=40;i<80;i++)
+{
+sprintf(temp,"%d",i);
+mvprintw(i-40,15,"%s",temp);   
+mvprintw(i-40,18,"%s",disklist[i]);
+}       
+
+/* display 3rd column*/
+for (int i=80;i<120;i++)
+{
+sprintf(temp,"%d",i);
+mvprintw(i-80,30,"%s",temp);   
+mvprintw(i-80,33,"%s",disklist[i]);
+}       
+/* display 4rd column*/
+for (int i=120;i<160;i++)
+{
+sprintf(temp,"%d",i);
+mvprintw(i-120,45,"%s",temp);   
+mvprintw(i-120,49,"%s",disklist[i]);
+}       
+/* display 4rd column*/
+for (int i=160;i<200;i++)
+{
+sprintf(temp,"%d",i);
+mvprintw(i-160,65,"%s",temp);   
+mvprintw(i-160,69,"%s",disklist[i]);
+}       
+
+//print last 200 slot
+mvprintw(0,77,"%s","200");   
+mvprintw(0,82,"%s",disklist[200]);
+char str[3];
+
+ mvprintw(0,100,"%s","enter Disk Block:");                        	/* print the message at the center of the screen */
+ getstr(str);
+ mvprintw(LINES - 2, 0, "You Entered: %s", str);
+ refresh();
+ getch();
+ endwin();
+printf(str);
+
+}
+

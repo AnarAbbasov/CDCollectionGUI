@@ -4,14 +4,17 @@
 #define STDLB_H
 #include <stdlib.h>
 #include <string.h>
+
+
+
 #endif
 #include "data_struct.h"
 #include "tui.c"
 #include<curses.h>
-#define DIALOG_H
 
-char generated_rows[200][50];
-//char player_slots[200][50]={};   #include <dialog.h>
+
+
+
 
 int main()
 {
@@ -54,6 +57,7 @@ int main()
    
  */
 
-//build_edit_list();
-generate_rows(generated_rows);
+build_list();
+//generate_rows();
+//generate_ids();
 }

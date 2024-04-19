@@ -1,10 +1,17 @@
  {
+    "env": {
+        "myIncludePath": [
+            "/usr/include/dialog/"
+           
+        ]
+    },
     "configurations": [
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
-               "/usr/include/dialog/**" 
+                "/usr/include/**" 
+                //"${workspaceFolder}/**"
+               
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
