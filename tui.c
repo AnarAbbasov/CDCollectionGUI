@@ -84,9 +84,11 @@ mvprintw(i-160,69,"%s",disklist[i]);
 mvprintw(0,77,"%s","200");   
 mvprintw(0,82,"%s",disklist[200]);
 char str[3];
-attron(COLOR_PAIR(2));  
- mvprintw(0,100,"%s","enter Disk Block:");                        	/* print the message at the center of the screen */
- getstr(str);
+attron(COLOR_PAIR(2)); 
+mvprintw(0,100,"%s","enter Disk Block:");  
+                      	/* print the message at the center of the screen */
+ getnstr(str,3);
+
  mvprintw(LINES - 2, 0, "You Entered: %s", str);
  refresh();
  getch();
