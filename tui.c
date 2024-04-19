@@ -20,7 +20,7 @@ void generate_list()
 {
     for (int i=0;i<=201;i++)
     {
-        disklist[i]="E morr";
+        disklist[i]="Emorricone";
     }
 }
 
@@ -38,6 +38,7 @@ void build_list()
     start_color();			/* Start color 			*/
     init_pair(1, COLOR_WHITE, COLOR_BLUE);
 			/* start the curses mode */
+    init_pair(2, COLOR_WHITE, COLOR_MAGENTA);
     attron(COLOR_PAIR(1));            
     getmaxyx(stdscr,row,col);/* get the number of rows and columns */
     char temp[3];
@@ -83,7 +84,7 @@ mvprintw(i-160,69,"%s",disklist[i]);
 mvprintw(0,77,"%s","200");   
 mvprintw(0,82,"%s",disklist[200]);
 char str[3];
-
+attron(COLOR_PAIR(2));  
  mvprintw(0,100,"%s","enter Disk Block:");                        	/* print the message at the center of the screen */
  getstr(str);
  mvprintw(LINES - 2, 0, "You Entered: %s", str);
