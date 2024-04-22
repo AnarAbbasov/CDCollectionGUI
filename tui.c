@@ -13,7 +13,7 @@
 #endif
 
 
-char disklist[200][10]={};
+char disklist[200][10];
 
 /*
 void generate_list()
@@ -26,9 +26,9 @@ void generate_list()
 
 */
 
-void get_list_from_file(char * disklist[200])
+void get_list_from_file(char  disklist[200][10])
 {
-disklist[1]="";
+
 read_from_file(disklist);
 printf("%s\n",disklist[1]);
 }

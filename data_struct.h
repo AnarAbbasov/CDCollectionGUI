@@ -6,5 +6,5 @@
 
 
 
-int read_from_file(char * disklist[200]);
-int write_to_file( char * disklist[200]);
+int read_from_file(char  disklist[200][10]);
+int write_to_file( char disklist[200][10]);
