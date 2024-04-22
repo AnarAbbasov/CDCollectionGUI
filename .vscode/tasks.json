@@ -8,8 +8,10 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
+                "data_struct.c",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/cdcoll.exe",
+                "-lncurses"
             ],
             "options": {
                 "cwd": "${fileDirname}"

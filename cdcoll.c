@@ -8,56 +8,34 @@
 
 
 #endif
-#include "data_struct.h"
+
 #include "tui.c"
 #include<curses.h>
+#include "data_struct.h"
 
 
-
-
+extern char disklist[200][10];
 
 int main()
 {
     
-/*
-   int status;
-    init_dialog(stdin, stdout);
-    dialog_vars.item_help=false;
-   
-    char dname[10]="xuy";
-   
-   char buf[MAX_LEN];
-    //   Name NameY NameX Text TextY TextX FLen ILen
-     
-    char * rows[]={"1","1","1","Disk Name","1","10","15","15",
-    "2","2","1","Disk Name","2","10","15","15",
-    "3","3","1",dname,"3","10","15","15"};
-    dialog_vars.input_result=NULL;
-   dialog_vars.item_help=false;
-   dialog_form("test","Slots",30,30,30,3,rows) ;
-    //dialog_vars.input_menu=true;
-   // dialog_menu("test","test",40,50,40,4,rows) ;
-   
-    //dialog_inputbox("test","fre",0,0,"eett",0);
-    end_dialog();
-  
- printf("%s",dialog_vars.input_result);
+
+printf(disklist[1]);
  
-/*
-   strcpy(player_slots[1],"30s hits");
+  strcpy (disklist[1],"30s hits");
   
    
-    write_to_file(player_slots);
-    strcpy(player_slots[1],"         ");
+   write_to_file(disklist[1]);
+ strcpy(disklist[1],"");
+   read_from_file(disklist);
    
-   //*player_slots[1]="";
-   read_from_file(player_slots);
+   printf(disklist[1]);
 
-   printf("%s\n",player_slots[1]);
+
    
- */
+ 
 
-build_list();
+//build_list();
 //generate_rows();
 //generate_ids();
 }

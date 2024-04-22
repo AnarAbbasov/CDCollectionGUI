@@ -6,5 +6,5 @@
 
 
 
-int read_from_file(char  player_slots[200][50]);
-int write_to_file( char  player_slots[200][50]);
+int read_from_file(char * disklist[200]);
+int write_to_file( char * disklist[200]);

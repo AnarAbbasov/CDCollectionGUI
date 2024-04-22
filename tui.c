@@ -8,14 +8,14 @@
 #include <string.h>
 #include <menu.h>
 #include <curses.h>
-
+#include "data_struct.h"
 #endif
 #endif
 
 
-char * disklist[]={};
+char disklist[200][10]={};
 
-
+/*
 void generate_list()
 {
     for (int i=0;i<=201;i++)
@@ -24,13 +24,23 @@ void generate_list()
     }
 }
 
+*/
 
+void get_list_from_file(char * disklist[200])
+{
+disklist[1]="";
+read_from_file(disklist);
+printf("%s\n",disklist[1]);
+}
 
 void build_list()
 
 {
-    disklist[0]="test";
-    generate_list();
+    get_list_from_file(disklist);
+    printf(disklist[1]);
+    strcpy(disklist[0],"test");
+    //generate_list();
+
     char mesg[]="Just a string";		/* message to be appeared on the screen */
     int row,col;				/* to store the number of rows and *
 					 * the number of colums of the screen */
