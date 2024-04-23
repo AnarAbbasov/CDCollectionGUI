@@ -30,15 +30,22 @@ void get_list_from_file(char  disklist[200][10])
 {
 
 read_from_file(disklist);
-printf("%s\n",disklist[1]);
+//printf("%s\n",disklist[1]);
+}
+
+
+
+char * get_contents_of_slot(int id)
+{
+    return(disklist[id]);
 }
 
 void build_list()
 
 {
     get_list_from_file(disklist);
-    printf(disklist[1]);
-    strcpy(disklist[0],"test");
+    
+    strcpy(disklist[0],"NA");
     //generate_list();
 
     char mesg[]="Just a string";		/* message to be appeared on the screen */
@@ -99,11 +106,11 @@ mvprintw(0,100,"%s","enter Disk Block:");
                       	/* print the message at the center of the screen */
  getnstr(str,3);
 
- mvprintw(LINES - 2, 0, "You Entered: %s", str);
+ mvprintw(1, 100, "Current disk: %s", get_contents_of_slot(atoi(str)));
  refresh();
  getch();
  endwin();
-printf(str);
+
 
 }
 
