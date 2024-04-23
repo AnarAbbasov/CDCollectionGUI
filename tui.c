@@ -102,13 +102,17 @@ mvprintw(0,77,"%s","200");
 mvprintw(0,82,"%s",disklist[200]);
 char str[3];
 attron(COLOR_PAIR(2)); 
-mvprintw(0,100,"%s","enter Disk Block:");  
-                      	/* print the message at the center of the screen */
- getnstr(str,3);
-
- mvprintw(1, 100, "Current disk: %s", get_contents_of_slot(atoi(str)));
+mvprintw(0,100,"%s","enter Disk Block (0 to exit):");                     	
+getnstr(str,3);
+int slotid;
+slotid=atoi(str);
+if (slotid !=0) {
+ mvprintw(1, 100, "Current disk: %s", get_contents_of_slot(slotid));
+ mvprintw(2,100,"%s","enter New Content:"); 
  refresh();
  getch();
+}
+ //
  endwin();
 
 
