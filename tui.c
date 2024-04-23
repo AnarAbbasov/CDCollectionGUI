@@ -43,6 +43,8 @@ char * get_contents_of_slot(int id)
 void build_list()
 
 {
+    char str[3]; // buffer for disk id
+    char disk_name[10]; //buffer for disk name from menu
     get_list_from_file(disklist);
     
     strcpy(disklist[0],"NA");
@@ -100,7 +102,8 @@ mvprintw(i-160,69,"%s",disklist[i]);
 //print last 200 slot
 mvprintw(0,77,"%s","200");   
 mvprintw(0,82,"%s",disklist[200]);
-char str[3];
+
+
 attron(COLOR_PAIR(2)); 
 mvprintw(0,100,"%s","enter Disk Block (0 to exit):");                     	
 getnstr(str,3);
@@ -109,6 +112,7 @@ slotid=atoi(str);
 if (slotid !=0) {
  mvprintw(1, 100, "Current disk: %s", get_contents_of_slot(slotid));
  mvprintw(2,100,"%s","enter New Content:"); 
+ getnstr(disk_name,10);
  refresh();
  getch();
 }
