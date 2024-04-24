@@ -11,179 +11,110 @@
 #endif
 #endif
 
-
 char disklist[200][10];
 
-/*
-void generate_list()
+void get_list_from_file(char disklist[200][10])
 {
-    for (int i=0;i<=201;i++)
-    {
-        disklist[i]="Emorricone";
-    }
+    read_from_file(disklist);
 }
 
-*/
-
-void get_list_from_file(char  disklist[200][10])
+char *get_contents_of_slot(int id)
 {
-
-read_from_file(disklist);
-//printf("%s\n",disklist[1]);
+    return (disklist[id]);
 }
 
-
-
-char * get_contents_of_slot(int id)
+int set_contents_of_slot(char *disk_name, int id)
 {
-    return(disklist[id]);
-}
-
-int set_contents_of_slot(char * disk_name,int id)
-{
-    strcpy (disklist[id],disk_name);
+    strcpy(disklist[id], disk_name);
     write_to_file(disklist);
     return 0;
 }
 
-
-
 void refresh_list()
 {
-char temp[4];
-for (int i=0;i<40;i++)
- {
- sprintf(temp,"%d",i);
- mvprintw(i,0,"%s",temp);   
- mvprintw(i,3,"%s",disklist[i]);
- }       
+    char temp[4];
+    for (int i = 0; i < 40; i++)
+    {
+        sprintf(temp, "%d", i);
+        mvprintw(i, 0, "%s", temp);
+        mvprintw(i, 3, "%s", disklist[i]);
+    }
 
-/* display 2nd column*/
-for (int i=40;i<80;i++)
-{
-sprintf(temp,"%d",i);
-mvprintw(i-40,15,"%s",temp);   
-mvprintw(i-40,18,"%s",disklist[i]);
-}       
+    /* display 2nd column*/
+    for (int i = 40; i < 80; i++)
+    {
+        sprintf(temp, "%d", i);
+        mvprintw(i - 40, 15, "%s", temp);
+        mvprintw(i - 40, 18, "%s", disklist[i]);
+    }
 
-/* display 3rd column*/
-for (int i=80;i<120;i++)
-{
-sprintf(temp,"%d",i);
-mvprintw(i-80,30,"%s",temp);   
-mvprintw(i-80,33,"%s",disklist[i]);
-}       
-/* display 4rd column*/
-for (int i=120;i<160;i++)
-{
-sprintf(temp,"%d",i);
-mvprintw(i-120,45,"%s",temp);   
-mvprintw(i-120,49,"%s",disklist[i]);
-}       
-/* display 4rd column */
+    /* display 3rd column*/
+    for (int i = 80; i < 120; i++)
+    {
+        sprintf(temp, "%d", i);
+        mvprintw(i - 80, 30, "%s", temp);
+        mvprintw(i - 80, 33, "%s", disklist[i]);
+    }
+    /* display 4rd column*/
+    for (int i = 120; i < 160; i++)
+    {
+        sprintf(temp, "%d", i);
+        mvprintw(i - 120, 45, "%s", temp);
+        mvprintw(i - 120, 49, "%s", disklist[i]);
+    }
+    /* display 4rd column */
 
-for (int i=160;i<200;i++)
-{
-sprintf(temp,"%d",i);
-mvprintw(i-160,65,"%s",temp);   
-mvprintw(i-160,69,"%s",disklist[i]);
-}       
+    for (int i = 160; i < 200; i++)
+    {
+        sprintf(temp, "%d", i);
+        mvprintw(i - 160, 65, "%s", temp);
+        mvprintw(i - 160, 69, "%s", disklist[i]);
+    }
 
-//print last 200 slot
-mvprintw(0,77,"%s","200");   
-mvprintw(0,82,"%s",disklist[200]);
-
+    // print last 200 slot
+    mvprintw(0, 77, "%s", "200");
+    mvprintw(0, 82, "%s", disklist[200]);
 }
-
-
-
-
 
 void build_list()
 
 {
-    char str[3]; // buffer for disk id
-    char disk_name[10]; //buffer for disk name from menu
+    char str[3];        // buffer for disk id
+    char disk_name[10]; // buffer for disk name from menu
     get_list_from_file(disklist);
-    
-    strcpy(disklist[0],"NA");
-    //generate_list();
 
-    char mesg[]="Just a string";		/* message to be appeared on the screen */
-    int row,col;				/* to store the number of rows and *
-					 * the number of colums of the screen */
-    initscr();	
-    start_color();			/* Start color 			*/
+    strcpy(disklist[0], "NA");
+    // generate_list();
+
+    char mesg[] = "Just a string"; /* message to be appeared on the screen */
+    int row, col;                  /* to store the number of rows and *
+                                    * the number of colums of the screen */
+    initscr();   /* start the curses mode */
+    start_color(); /* Start color 			*/
     init_pair(1, COLOR_WHITE, COLOR_BLUE);
-			/* start the curses mode */
     init_pair(2, COLOR_WHITE, COLOR_MAGENTA);
-    attron(COLOR_PAIR(1));            
-    getmaxyx(stdscr,row,col);/* get the number of rows and columns */
+    attron(COLOR_PAIR(1));
+    getmaxyx(stdscr, row, col); /* get the number of rows and columns */
     char temp[3];
- /* display 1st column*/
- for (int i=0;i<40;i++)
- {
- sprintf(temp,"%d",i);
- mvprintw(i,0,"%s",temp);   
- mvprintw(i,3,"%s",disklist[i]);
- }       
+    refresh_list();
+    attron(COLOR_PAIR(2));
+    mvprintw(0, 100, "%s", "enter Disk Block (0 to exit):");
+    getnstr(str, 3);
+    int slotid;
+    slotid = atoi(str);
+    if (slotid != 0)
+    {
 
-/* display 2nd column*/
-for (int i=40;i<80;i++)
-{
-sprintf(temp,"%d",i);
-mvprintw(i-40,15,"%s",temp);   
-mvprintw(i-40,18,"%s",disklist[i]);
-}       
-
-/* display 3rd column*/
-for (int i=80;i<120;i++)
-{
-sprintf(temp,"%d",i);
-mvprintw(i-80,30,"%s",temp);   
-mvprintw(i-80,33,"%s",disklist[i]);
-}       
-/* display 4rd column*/
-for (int i=120;i<160;i++)
-{
-sprintf(temp,"%d",i);
-mvprintw(i-120,45,"%s",temp);   
-mvprintw(i-120,49,"%s",disklist[i]);
-}       
-/* display 4rd column*/
-for (int i=160;i<200;i++)
-{
-sprintf(temp,"%d",i);
-mvprintw(i-160,65,"%s",temp);   
-mvprintw(i-160,69,"%s",disklist[i]);
-}       
-
-//print last 200 slot
-mvprintw(0,77,"%s","200");   
-mvprintw(0,82,"%s",disklist[200]);
-
-
-attron(COLOR_PAIR(2)); 
-mvprintw(0,100,"%s","enter Disk Block (0 to exit):");     
-              	
-getnstr(str,3);
-int slotid;
-slotid=atoi(str);
-if (slotid !=0) {
- 
- mvprintw(1, 100, "Current disk: %s", get_contents_of_slot(slotid));
- mvprintw(2,100,"%s","enter New Content:"); 
- attroff(COLOR_PAIR(2)); 
- getnstr(disk_name,10);
- set_contents_of_slot(disk_name,slotid);
- attron(COLOR_PAIR(1)); 
- refresh_list();
- refresh();
- getch();
+        mvprintw(1, 100, "Current disk: %s", get_contents_of_slot(slotid));
+        mvprintw(2, 100, "%s", "enter New Content:");
+        attroff(COLOR_PAIR(2));
+        getnstr(disk_name, 10);
+        set_contents_of_slot(disk_name, slotid);
+        attron(COLOR_PAIR(1));
+        refresh_list();
+        refresh();
+        getch();
+    }
+    //
+    endwin();
 }
- //
- endwin();
-
-
-}
-
