@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <menu.h>
 #include <curses.h>
 #include "data_struct.h"
 #endif
