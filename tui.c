@@ -86,14 +86,14 @@ void build_list()
     start_color();
     get_list_from_file(disklist);
     init_pair(1, COLOR_WHITE, COLOR_MAGENTA);
-     init_pair(2, COLOR_WHITE, COLOR_BLUE);
+    init_pair(2, COLOR_WHITE, COLOR_BLUE);
     WINDOW *mainwindow = newwin(39, 146, 0, 0);
-    WINDOW *editwindow = subwin(mainwindow,30, 40, 5, 90);
+    WINDOW *editwindow = subwin(mainwindow, 30, 40, 5, 90);
     box(mainwindow, 0, 0);
-     box(editwindow, 0, 0);
+    box(editwindow, 0, 0);
     refresh_list(mainwindow);
     mvwprintw(editwindow, 1, 1, "This is a subwindow.");
-   wbkgd(editwindow, COLOR_PAIR(2));
+    wbkgd(editwindow, COLOR_PAIR(2));
     wbkgd(mainwindow, COLOR_PAIR(1));
     refresh();
     wrefresh(mainwindow);
