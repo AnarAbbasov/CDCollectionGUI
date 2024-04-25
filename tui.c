@@ -30,78 +30,122 @@ int set_contents_of_slot(char *disk_name, int id)
     return 0;
 }
 
-void refresh_list()
+void refresh_list(WINDOW *main_window)
 {
+    // mvwprintw(subwindow, 1, 1, "Subwindow");
     char temp[4];
-    for (int i = 0; i < 40; i++)
+    for (int i = 1; i < 37; i++)
     {
         sprintf(temp, "%d", i);
-        mvprintw(i, 0, "%s", temp);
-        mvprintw(i, 3, "%s", disklist[i]);
+        mvwprintw(main_window, i, 1, "%s", temp);
+        mvwprintw(main_window, i, 4, "%s", disklist[i]);
     }
 
     /* display 2nd column*/
-    for (int i = 40; i < 80; i++)
+    for (int i = 37; i < 73; i++)
     {
         sprintf(temp, "%d", i);
-        mvprintw(i - 40, 15, "%s", temp);
-        mvprintw(i - 40, 18, "%s", disklist[i]);
+        mvwprintw(main_window, i - 36, 15, "%s", temp);
+        mvwprintw(main_window, i - 36, 18, "%s", disklist[i]);
     }
 
     /* display 3rd column*/
-    for (int i = 80; i < 120; i++)
+    for (int i = 73; i < 109; i++)
     {
         sprintf(temp, "%d", i);
-        mvprintw(i - 80, 30, "%s", temp);
-        mvprintw(i - 80, 33, "%s", disklist[i]);
+        mvwprintw(main_window, i - 72, 30, "%s", temp);
+        mvwprintw(main_window, i - 72, 33, "%s", disklist[i]);
     }
     /* display 4rd column*/
-    for (int i = 120; i < 160; i++)
+    for (int i = 109; i < 145; i++)
     {
         sprintf(temp, "%d", i);
-        mvprintw(i - 120, 45, "%s", temp);
-        mvprintw(i - 120, 49, "%s", disklist[i]);
+        mvwprintw(main_window, i - 108, 45, "%s", temp);
+        mvwprintw(main_window, i - 108, 49, "%s", disklist[i]);
     }
     /* display 4rd column */
 
-    for (int i = 160; i < 200; i++)
+    for (int i = 145; i < 180; i++)
     {
         sprintf(temp, "%d", i);
-        mvprintw(i - 160, 65, "%s", temp);
-        mvprintw(i - 160, 69, "%s", disklist[i]);
+        mvwprintw(main_window, i - 144, 65, "%s", temp);
+        mvwprintw(main_window, i - 144, 69, "%s", disklist[i]);
     }
 
-    // print last 200 slot
-    mvprintw(0, 77, "%s", "200");
-    mvprintw(0, 82, "%s", disklist[200]);
+    for (int i = 180; i < 201; i++)
+    {
+        sprintf(temp, "%d", i);
+        mvwprintw(main_window, i - 179, 75, "%s", temp);
+        mvwprintw(main_window, i - 179, 79, "%s", disklist[i]);
+    }
 }
 
 void build_list()
+{
+    initscr();
+    start_color();
+    get_list_from_file(disklist);
+    init_pair(1, COLOR_WHITE, COLOR_MAGENTA);
+     init_pair(2, COLOR_WHITE, COLOR_BLUE);
+    WINDOW *mainwindow = newwin(39, 146, 0, 0);
+    WINDOW *editwindow = subwin(mainwindow,30, 40, 5, 90);
+    box(mainwindow, 0, 0);
+     box(editwindow, 0, 0);
+    refresh_list(mainwindow);
+    mvwprintw(editwindow, 1, 1, "This is a subwindow.");
+   wbkgd(editwindow, COLOR_PAIR(2));
+    wbkgd(mainwindow, COLOR_PAIR(1));
+    refresh();
+    wrefresh(mainwindow);
+    wrefresh(editwindow);
+
+    getch();
+    // Clean up
+    delwin(mainwindow);
+    endwin();
+}
+/*
+void build_list()
 
 {
+     initscr();
     char str[3];        // buffer for disk id
     char disk_name[10]; // buffer for disk name from menu
     get_list_from_file(disklist);
-
+    WINDOW* mainwindow = newwin(30, 100, 0, 0);
     strcpy(disklist[0], "NA");
     // generate_list();
+     box(mainwindow,0,0);
+     /* message to be appeared on the screen
+    int row, col;                   to store the number of rows and
+                                    * the number of colums of the screen
 
-    char mesg[] = "Just a string"; /* message to be appeared on the screen */
-    int row, col;                  /* to store the number of rows and *
-                                    * the number of colums of the screen */
-    initscr();   /* start the curses mode */
-    start_color(); /* Start color 			*/
+    start_color(); /* Start color
     init_pair(1, COLOR_WHITE, COLOR_BLUE);
     init_pair(2, COLOR_WHITE, COLOR_MAGENTA);
     attron(COLOR_PAIR(1));
-    getmaxyx(stdscr, row, col); /* get the number of rows and columns */
+    getmaxyx(stdscr, row, col); /* get the number of rows and columns
     char temp[3];
-    refresh_list();
-    attron(COLOR_PAIR(2));
-    mvprintw(0, 100, "%s", "enter Disk Block (0 to exit):");
-    getnstr(str, 3);
+
+    mvwprintw(mainwindow,10, 10, "otsuda");
+  //  wbkgd(mainwindow, COLOR_PAIR(1));
+
+
+   wrefresh(mainwindow);
+   // refresh_list(mainwindow);
+   // attron(COLOR_PAIR(2));
+   // mvprintw(0, 100, "%s", "enter Disk Block (0 to exit):");
+   // getnstr(str, 3);
     int slotid;
+
+
+
     slotid = atoi(str);
+
+
+      // refresh();
+
+   getch();
     if (slotid != 0)
     {
 
@@ -111,10 +155,13 @@ void build_list()
         getnstr(disk_name, 10);
         set_contents_of_slot(disk_name, slotid);
         attron(COLOR_PAIR(1));
-        refresh_list();
+       // refresh_list(mainwindow);
         refresh();
+
         getch();
     }
     //
+    delwin(mainwindow);
     endwin();
 }
+*/
