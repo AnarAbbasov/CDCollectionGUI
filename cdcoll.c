@@ -56,5 +56,7 @@ void populate_dir(char disklist[200][10])
 int main()
 {
 
+
   build_list();
+
 }

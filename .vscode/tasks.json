@@ -11,7 +11,8 @@
                 "data_struct.c",
                 "-o",
                 "${fileDirname}/cdcoll.exe",
-                "-lncurses"
+                "-lncurses",
+                "-lmenu"
             ],
             "options": {
                 "cwd": "${fileDirname}"
