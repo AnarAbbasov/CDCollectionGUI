@@ -13,10 +13,10 @@
 #include <menu.h>
 char disklist[200][10];
 
-
-MENU * menu;
-ITEM * items[3];
-WINDOW *editwindow ;
+MENU *menu;
+ITEM *items[3];
+WINDOW *editwindow;
+WINDOW *mainwindow ;
 void get_list_from_file(char disklist[200][10])
 {
     read_from_file(disklist);
@@ -94,112 +94,119 @@ void delete_window(WINDOW *window)
     refresh();
 }
 
-
-void show_menu(WINDOW * mainwindow)
+void show_menu(WINDOW *mainwindow)
 {
- 
- items[0]=new_item("Edit slots"," ");
- items[1]=new_item("Exit"," ");
- items[2] = NULL;
- menu=new_menu((ITEM**)items);
- set_menu_win(menu,mainwindow);
- set_menu_sub(menu,derwin(mainwindow,2,20,3,100));
- post_menu(menu);
- wrefresh(mainwindow);
- 
-   
+
+    items[0] = new_item("Edit slots", " ");
+    items[1] = new_item("Exit", " ");
+    items[2] = NULL;
+    menu = new_menu((ITEM **)items);
+    set_menu_win(menu, mainwindow);
+    set_menu_sub(menu, derwin(mainwindow, 2, 20, 3, 100));
+    post_menu(menu);
+    wrefresh(mainwindow);
 }
 
-
-void show_edit_window (WINDOW * mainwindow)
+void show_edit_window(WINDOW *mainwindow)
 {
-  editwindow= subwin(mainwindow, 30, 40, 5, 90);
-  box(editwindow, 0, 0);
-  mvwprintw(editwindow, 1, 1, "Edit Sony CD changer");
-  mvwprintw(editwindow, 3, 1, "Enter Slot Number:");
-  wbkgd(editwindow, COLOR_PAIR(2));
-   wrefresh(editwindow);
+    editwindow = subwin(mainwindow, 30, 40, 5, 90);
+    box(editwindow, 0, 0);
+    mvwprintw(editwindow, 1, 1, "Edit Sony CD changer");
+    mvwprintw(editwindow, 3, 1, "Enter Slot Number:");
+    wbkgd(editwindow, COLOR_PAIR(2));
+    wrefresh(editwindow);
+}
+
+void exit_program()
+{
+  unpost_menu(menu);
+ free_menu(menu);
+ free_item(items[0]);
+ free_item(items[1]);
+ free_item(items[2]);
+ delwin(mainwindow);
+ endwin();
+ return ;
 }
 
 void build_list()
 {
-    int c,int_slotid; 
+    int c, int_slotid;
     initscr();
     start_color();
     char slotid[4];
     char disk_name[10];
-   
+
     get_list_from_file(disklist);
     init_pair(1, COLOR_WHITE, COLOR_MAGENTA);
     init_pair(2, COLOR_WHITE, COLOR_BLUE);
-    WINDOW *mainwindow = newwin(39, 146, 0, 0);
+    mainwindow = newwin(39, 146, 0, 0);
     box(mainwindow, 0, 0);
     refresh_list(mainwindow);
     wbkgd(mainwindow, COLOR_PAIR(1));
+    mvwprintw(mainwindow, 0, 100, "CD changer v2.0.0  Copyright Anar Abbasov(C)");
     show_menu(mainwindow);
-    
+
     wrefresh(mainwindow);
     // refresh();
     cbreak();
     noecho();
-   while ((c = wgetch(mainwindow)) != KEY_F(1)) {
-        switch (c) {
-            case 100  :
-                menu_driver(menu, REQ_DOWN_ITEM);           
-                break;
-            case KEY_DOWN  :
-                   menu_driver(menu, REQ_DOWN_ITEM);
-                  break;                
-            case 117:
-                menu_driver(menu, REQ_UP_ITEM);              
-                break;
-            case KEY_UP:
-                menu_driver(menu, REQ_UP_ITEM);
-                break;                
-            case 10: // Enter key
-                if (current_item(menu) == items[2]) // Exit option
-                    break;
-                if (current_item(menu)== items[0]) {
-                    show_edit_window(mainwindow);
-                    echo();
-                    mvwgetstr(editwindow, 3, 20, slotid);
-                   
-                    int_slotid = atoi(slotid);
-                    
-                    mvwprintw(editwindow,4, 1, "Current disk: %s", get_contents_of_slot(int_slotid));
-                    mvwprintw(editwindow,5, 1, "Enter new name:" );
-                    mvwgetnstr(editwindow, 5, 17, disk_name,10);
-                   // mvwprintw(editwindow,6, 1, "new_name disk: %s", disk_name);
-                    set_contents_of_slot(disk_name, int_slotid);
-                    refresh_list(mainwindow);
-                    delete_window(editwindow);
-                   // wrefresh(editwindow);
-                  
-                }
-                // Handle other menu options here
-                break;
+    while ((c = wgetch(mainwindow)) != KEY_F(1))
+    {
+        switch (c)
+        {
+        case 100:
+            menu_driver(menu, REQ_DOWN_ITEM);
+            //break;
+        case KEY_DOWN:
+            menu_driver(menu, REQ_DOWN_ITEM);
+            break;
+        case 117:
+            menu_driver(menu, REQ_UP_ITEM);
+            break;
+        case KEY_UP:
+            menu_driver(menu, REQ_UP_ITEM);
+            break;
+        case 10:                                // Enter key
+            if (current_item(menu) == items[1]) {// Exit option
+                exit_program();
+                return;}
+                
+            if (current_item(menu) == items[0])
+            {
+                show_edit_window(mainwindow);
+                echo();
+                mvwgetstr(editwindow, 3, 20, slotid);
+
+                int_slotid = atoi(slotid);
+
+                mvwprintw(editwindow, 4, 1, "Current disk: %s", get_contents_of_slot(int_slotid));
+                mvwprintw(editwindow, 5, 1, "Enter new name:");
+                mvwgetnstr(editwindow, 5, 17, disk_name, 10);
+                // mvwprintw(editwindow,6, 1, "new_name disk: %s", disk_name);
+                set_contents_of_slot(disk_name, int_slotid);
+                refresh_list(mainwindow);
+                delete_window(editwindow);
+                noecho();
+                // wrefresh(editwindow);
+            }
+            // Handle other menu options here
+            //break;
         }
-     //   wrefresh(editwindow);
+        //   wrefresh(editwindow);
         wrefresh(mainwindow);
+        
     }
 
-
-     
-     
-     
-     
-
-  
-
- //   }
+    //   }
     // Clean up
-    unpost_menu(menu);
-    free_menu(menu);
-    free_item(items[0]);
-    free_item(items[1]);
-    free_item(items[2]);
-    delwin(mainwindow);
-    endwin();
+   
+   
+   
+   
+   
+   
+   
 }
 /*
 void build_list()
@@ -237,7 +244,7 @@ void build_list()
 
 
 
-  
+
 
 
       // refresh();
@@ -250,7 +257,7 @@ void build_list()
         mvprintw(2, 100, "%s", "enter New Content:");
         attroff(COLOR_PAIR(2));
         getnstr(disk_name, 10);
-        
+
         attron(COLOR_PAIR(1));
        // refresh_list(mainwindow);
         refresh();
